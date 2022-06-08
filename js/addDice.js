@@ -200,16 +200,19 @@ function flipOrMove(playerChoice,turnObject){
     let curChip = document.getElementById(playerChoice);
     if (playerChoice.includes(turn)){
         if (curChip.classList.value.includes("flipped")) {
-            flipBack(playerChoice);
-            turnObject.removePossible(curChip.textContent);
-            turnObject.lastSelected = playerChoice;
+            if(flipBack(playerChoice)){
+                turnObject.removePossible(curChip.textContent);
+                turnObject.lastSelected = playerChoice;
+            };
         } else {
-            moveToCenter(playerChoice);
-            turnObject.removePossible(curChip.textContent);
+            if(moveToCenter(playerChoice)){
+                turnObject.removePossible(curChip.textContent);
+            };
         }
     } else if (!playerChoice.includes(turn) && !curChip.classList.value.includes("flipped")){
-        flipChip(playerChoice);
-        turnObject.removePossible(curChip.textContent);
+        if (flipChip(playerChoice)){
+            turnObject.removePossible(curChip.textContent);
+        }
     }
     highlightChips(turnObject, getTurn());
     
@@ -227,7 +230,9 @@ function moveToCenter(playerChoice){
         curChip.classList.remove("selected");
         newSection.removeChild(curChip);
         bettingSection.appendChild(curChip);
+        return true;
     }
+    return false;
 
 }
 
@@ -243,7 +248,9 @@ function flipBack(playerChoice){
         curChip.classList.add("rightSideUp");
         curChip.classList.add(rightside);
         curChip.classList.remove("selected");
+        return true;
     }
+    return false;
 }
 
 function oppositeTurn(turn){
@@ -268,7 +275,9 @@ function flipChip(playerChoice){
         curChip.classList.add("flipped");
         curChip.classList.add(flipped);
         curChip.classList.remove("selected");
+        return true;
     }
+    return false;
 }
 
 function bankchips() {
