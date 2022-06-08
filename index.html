@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="css/styles.css"> 
+    <script type="text/javascript" src="js/addDice.js"></script>   
+ 
+
+</head>
+<body>
+    <h1>Roll Up</h1>
+    <p>Start Rolling and try not to bust (a nut)</p>
+    <p id="turnIndicator">It's Player 1's Turn</p>
+    <div>
+        <div id="p2numberSection" class="numberSection"></div>
+    </div>
+
+    <div class="middle-section">
+        <div id="bet-chips-area" class="bet-chips-area"></div>
+        <div id="dice-area" class="dice-area">
+            <div id="dice1" class="dice"></div>
+            <div id="dice2" class="dice"></div>
+        </div>
+        <div id="button-area" class="button-area">
+
+        </div>
+
+    </div>
+
+
+
+    <div>
+        <div id="p1numberSection" class="numberSection"></div>
+    </div>
+
+    <script>
+        currentTurn = "p1"
+        let pOneNumberSection = document.querySelector("#p1numberSection");
+        let pTwoNumberSection = document.querySelector("#p2numberSection");
+        let buttonSection = document.querySelector("#button-area");
+        pOneNumberSection.classList.add("currentTurnp1");
+
+        function fillNumbers(section) {
+        if (section == "p1"){
+            section = pOneNumberSection
+            player = 'rightSideUpp1'
+            appended = "p1"
+        }
+        else {
+            section = pTwoNumberSection
+            player = 'rightSideUpp2'
+            appended = "p2"
+        }
+            for (i=1;i<10;i++) {
+                let newNumber = document.createElement("div");
+                newNumber.classList.add('numberIcon');
+                newNumber.classList.add('rightSideUp');
+                newNumber.classList.add(player);
+                newNumber.id = appended + "number" + i;
+                newNumber.textContent = i;
+                section.appendChild(newNumber);
+            }
+        }
+
+        fillNumbers("p1");
+        fillNumbers("p2");
+
+        function addButtons(section){
+            let rollButton = document.createElement("button");
+            rollButton.id = "rollButton";
+            rollButton.classList.add("myButton");
+            rollButton.textContent = "Roll";
+            let bankChip = document.createElement("button");
+            bankChip.classList.add("myButton");
+            bankChip.id = "bankChips";
+            bankChip.textContent = "Bank Chips";
+            section.appendChild(rollButton);
+            section.appendChild(bankChip);
+        }
+
+        addButtons(buttonSection);
+
+        let bankChip = document.getElementById("bankChips");
+        bankChip.addEventListener('click', () => {
+            bankchips();
+        });
+
+        let curTurn = ""
+        let numbersOnly = []
+        let roller = document.getElementById("rollButton");
+        roller.addEventListener('click', () => {
+            let selected = document.getElementsByClassName('selected');
+            let arrayOfSelected = Array.from(selected);
+            console.log("array of selected = : " + arrayOfSelected);
+            if (arrayOfSelected.length == 0) {
+                results = rollBothDice();
+                curTurn = new Turn(results);
+                highlightChips(curTurn, getTurn());
+                selected = document.getElementsByClassName('selected');
+                arrayOfSelected = Array.from(selected);
+                console.log("array of selected = : " + arrayOfSelected);
+                numbersOnly = []
+                for (i=0; i<arrayOfSelected.length; i++) {
+                    numbersOnly.push(arrayOfSelected[i].textContent);
+                }
+                //NO SELECTED CHIPS
+                //ONLY ONE POSSIBLE CHIP BUT ALL POSSIBLE MOVES
+                //ONLY TWO POSSIBLE CHIPS BUT THEY"RE THE SAME AND THE DICE ARE NOT
+                if (arrayOfSelected.length == 0) {
+                    busted();
+                }
+
+            }
+            //results = rollBothDice()
+            //rollTracks = new Turn(results)
+
+
+        });
+
+        const buttons = document.querySelectorAll('.numberIcon');
+        buttons.forEach((numberIcon) => {
+    // and for each one we add a 'click' listener
+            numberIcon.addEventListener('click', () => {
+                flipOrMove(numberIcon.id, curTurn);
+                //console.log(curTurn.possible);
+                highlightChips(curTurn, getTurn());
+        });
+});
+
+
+
+
+
+
+
+
+
+        //https://betterprogramming.pub/creating-dice-in-flexbox-in-css-a02a5d85e516
+        
+//Use Round and game to create RollUp game
+//highlight chip
+//remove chip
+//dice roll
+//add chip back
+//turn indicator + tracker (for flipping/moving purposes)
+
+        
+        //const buttons = document.querySelectorAll('.numberIcon');
+
+        //buttons.forEach((numberIcon) => {
+
+            // and for each one we add a 'click' listener
+       //     numberIcon.addEventListener('click', () => {
+       //         flipOrMove(numberIcon.id);
+       //     });
+        //});
+
+       // Game();
+        
+        
+
+        //turn();
+    </script>
+    <script type="text/javascript" src="js/turn.js"></script>  
+</body>
+
+
+</html>
