@@ -159,8 +159,14 @@ function rollBothDice(){
     let diceTwo = document.getElementById("dice2");
     let diceRollOne = diceRoll();
     let diceRollTwo = diceRoll();
+    let diceArea = document.getElementById("dice-area");
+    while(diceArea.firstChild){
+        diceArea.removeChild(diceArea.firstChild);
+    }
     addDiceValue(diceRollOne, diceOne);
     addDiceValue(diceRollTwo, diceTwo);
+    diceArea.appendChild(diceOne);
+    diceArea.appendChild(diceTwo);
     let diceRolled = [diceRollOne, diceRollTwo];
     return diceRolled;
 }
