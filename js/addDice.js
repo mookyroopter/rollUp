@@ -105,18 +105,6 @@ function highlightChips(turnObject, turn){
         }
     }
     if (lengthOwn > 2) {
-        console.log("diceOneFound: " + diceOneFound);
-        console.log("diceTwoFound: " + diceTwoFound);
-        console.log("maxFound: " + maxFound);
-        console.log("possible moves length: " + possibleMoves.length);
-        console.log("diceOne:" + turnObject.diceOne);
-        console.log("diceTwo: " + turnObject.diceTwo);
-        console.log("temparray: " + tempArray);
-        console.log("numberArray: " + numArray);
-        console.log("temparray filter dice one: " + numArray.filter(item => item == turnObject.diceOne).length);
-        console.log("temparray filter dice two: " + numArray.filter(item => item == turnObject.diceTwo).length);
-
-
         if ((diceOneFound == false || diceTwoFound == false) && maxFound == false && possibleMoves.length > 1 && turnObject.diceOne != turnObject.diceTwo) {
             console.log("Not possible")
         } else if (turnObject.diceOne == turnObject.diceTwo && numArray.filter(item => item == turnObject.diceOne).length <= 1 && numArray.filter(item => item == turnObject.diceTwo).length <=1 && possibleMoves.length > 1 && maxFound == false) {
@@ -151,15 +139,14 @@ function highlightChips(turnObject, turn){
             }
         }
     }
-
 }
 
 function rollBothDice(){
     let diceOne = document.getElementById("dice1");
     let diceTwo = document.getElementById("dice2");
+    let diceArea = document.getElementById("dice-area");
     let diceRollOne = diceRoll();
     let diceRollTwo = diceRoll();
-    let diceArea = document.getElementById("dice-area");
     while(diceArea.firstChild){
         diceArea.removeChild(diceArea.firstChild);
     }
@@ -180,6 +167,8 @@ function getTurn(){
     }
 }
 
+
+//THERES GOTTA BE A BETTER WAY TO DO THIS
 function changeTurn(){
     let turn = getTurn();
     let pOneBackground = document.getElementById("p1numberSection");
@@ -200,7 +189,7 @@ function changeTurn(){
     });
 }
 
-//validation happens here?
+//validation happens here
 function flipOrMove(playerChoice,turnObject){
     turn = getTurn();
     let curChip = document.getElementById(playerChoice);
@@ -323,7 +312,7 @@ function sortSection(section, sortedArray, numberArray){
     }
 }
 
-//ADD A SORT OR RESTRICT CHIPS TO CERTAIN ZONES
+//ADD POPUP OR INDICATOR OF BUST
 function busted() {
     console.log("BUStED");
     let turn = getTurn();
@@ -344,35 +333,12 @@ function busted() {
 function roll(){
     let results = rollBothDice();
     return results;
-
-    //track combined, or both
-    //if neither, end turn
 }
 
-
-
-//roll button cannot be found.  
-//Trying to move away from onClick since I can't store already used guesses
-function turn(){
-
-    //changeTurn();
-    
-    //both dice, or combine
-    //bank or roll
-    //if no possible move back
-}
-//turn();
-
-
-//Need to define a turn
-//need to determine when turn ends
-//need to limit selectable tiles (turn and flipped classes)
-    //selectable array?
-//add to middle vs flip chips - turn based and ONLY SELECTABLE CHIPS
-//unflip own
-//two left on turn == only one dice has to be used
-//diceroll has parameters, diceone, dicetwo, total. either both diceone AND dicetwo have to be used OR total
-
+//NEED TO DETERMINE WIN
+//KEEP TRACK OF SCORE
+//ALLOW RESTART
+//allow undo?
 
 
 
