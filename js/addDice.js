@@ -68,6 +68,8 @@ function highlightChips(turnObject, turn){
     let ownButtons = document.getElementById(section).querySelectorAll('.numberIcon');
     let ownButts = Array.from(ownButtons);
     let allButtons = [oppButts,ownButts].flat();
+    let bankedArea = document.getElementById('bet-chips-area').querySelectorAll('.numberIcon');
+    let bankButts = Array.from(bankedArea);
     let lengthOwn = ownButts.length;
     let tempArray = []
     let numArray = []
@@ -104,7 +106,7 @@ function highlightChips(turnObject, turn){
             maxFound = true;
         }
     }
-    if (lengthOwn > 2) {
+    if (bankButts.length + lengthOwn > 2) {
         if ((diceOneFound == false || diceTwoFound == false) && maxFound == false && possibleMoves.length > 1 && turnObject.diceOne != turnObject.diceTwo) {
             console.log("Not possible")
         } else if (turnObject.diceOne == turnObject.diceTwo && numArray.filter(item => item == turnObject.diceOne).length <= 1 && numArray.filter(item => item == turnObject.diceTwo).length <=1 && possibleMoves.length > 1 && maxFound == false) {
@@ -214,7 +216,7 @@ function flipOrMove(playerChoice,turnObject){
 }   
 
 
-//keeping validation out of this.. just move
+//update Flip/Flipback to One function and Move to Center
 function moveToCenter(playerChoice){
     let turn = getTurn();
     let curChip = document.getElementById(playerChoice);
